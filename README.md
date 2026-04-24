@@ -60,7 +60,18 @@ from pathfinder import load_universe
 universe = load_universe("polygons.png")
 ```
 
-### 2. `find_black_pixel(universe, region) -> (x, y)`
+### 2. `bfs(universe, start, end, blocked_mask=None) -> list | None`
+
+The core BFS algorithm. Takes `(row, col)` coordinates and searches the 4-connected grid for the shortest path on black pixels. Returns a list of `(row, col)` tuples or `None`. This is called internally by `find_path`, `path_exists`, and `find_non_intersecting_paths`.
+
+```python
+from pathfinder import bfs, load_universe
+
+universe = load_universe("polygons.png")
+path = bfs(universe, start=(0, 0), end=(99, 99))
+```
+
+### 3. `find_black_pixel(universe, region) -> (x, y)`
 
 Finds the first black pixel in a region of the image. Region can be `"top_left"`, `"top_right"`, `"bottom_left"`, or `"bottom_right"`. Useful for picking start/end points automatically.
 
@@ -72,7 +83,7 @@ start = find_black_pixel(universe, "top_left")      # (0, 0)
 end = find_black_pixel(universe, "bottom_right")     # (99, 99)
 ```
 
-### 3. `find_path(universe, start_x, start_y, end_x, end_y) -> list | None`
+### 4. `find_path(universe, start_x, start_y, end_x, end_y) -> list | None`
 
 The core function. Runs BFS to find the shortest path between two points, returning a list of `(x, y)` coordinates. Returns `None` if no path exists.
 
@@ -84,7 +95,7 @@ path = find_path(universe, 0, 0, 99, 99)
 # [(0, 0), (0, 1), (0, 2), ..., (99, 99)]
 ```
 
-### 4. `path_exists(universe, start_x, start_y, end_x, end_y) -> bool`
+### 5. `path_exists(universe, start_x, start_y, end_x, end_y) -> bool`
 
 Convenience wrapper around `find_path`. Returns `True` if a path exists, `False` otherwise.
 
@@ -95,7 +106,7 @@ universe = load_universe("polygons.png")
 print(path_exists(universe, 0, 0, 99, 99))  # True
 ```
 
-### 5. `find_non_intersecting_paths(universe, ...) -> (list | None, list | None)`
+### 6. `find_non_intersecting_paths(universe, ...) -> (list | None, list | None)`
 
 Given two pairs of points, finds two paths that don't share any pixels. Calls `find_path` for the first pair, blocks those pixels, then finds the second. If that fails, tries the reverse order. Returns `(None, None)` if not possible.
 
@@ -106,7 +117,7 @@ universe = load_universe("polygons.png")
 path1, path2 = find_non_intersecting_paths(universe, 0, 0, 99, 0, 0, 99, 99, 99)
 ```
 
-### 6. `save_path_image(universe, paths, output_path)`
+### 7. `save_path_image(universe, paths, output_path)`
 
 Takes the results from `find_path` or `find_non_intersecting_paths` and draws them onto the universe image. Paths are colored blue, red, green, yellow in order. Saves the result to disk.
 
