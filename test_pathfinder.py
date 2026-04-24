@@ -18,7 +18,7 @@ from pathfinder import (
 from utils import download_test_images
 
 
-# 1. Helpers
+# Helpers
 
 def assert_path_is_valid(universe, path):
     """Assert that every pixel in the path is black and each step is 4-adjacent."""
@@ -45,7 +45,7 @@ def make_ring_universe(size, center, outer_radius, inner_radius):
     return universe
 
 
-# 2. path_exists: basic connectivity
+# 1. path_exists: basic connectivity
 
 class TestPathExists:
     def test_open_grid(self):
@@ -96,7 +96,7 @@ class TestPathExists:
         assert not path_exists(grid, 0, 0, 4, 4)
 
 
-# 3. path_exists: corridors and bottlenecks
+# 2. path_exists: corridors and bottlenecks
 
 class TestCorridorsAndBottlenecks:
     def test_narrow_one_pixel_corridor(self):
@@ -139,7 +139,7 @@ class TestRingObstacle:
         assert_path_is_valid(ring, path)
 
 
-# 5. find_path: path correctness
+# 3. find_path: path correctness
 
 class TestFindPath:
     def test_returns_correct_endpoints(self):
@@ -173,7 +173,7 @@ class TestFindPath:
         assert find_path(grid, 0, 0, 4, 4) is None
 
 
-# 6. find_non_intersecting_paths
+# 4. find_non_intersecting_paths
 
 class TestNonIntersectingPaths:
     def test_open_grid_finds_two_paths(self):
@@ -208,7 +208,7 @@ class TestNonIntersectingPaths:
         assert_path_is_valid(ring, path2)
 
 
-# 7. save_path_image: visualization
+# 5. save_path_image: visualization
 
 class TestVisualization:
     def test_saves_file(self, tmp_path):
@@ -226,7 +226,7 @@ class TestVisualization:
         assert os.path.exists(output)
 
 
-# 8. Real images from github.com/mcollinswisc/2D_paths
+# 6. Real images from github.com/mcollinswisc/2D_paths
 
 class TestRealImages:
     @pytest.fixture(scope="class")
