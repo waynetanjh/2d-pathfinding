@@ -35,7 +35,10 @@ For non-intersecting paths, the greedy approach (find one path, block it, find t
 
 ```bash
 make setup
+source venv/bin/activate
 ```
+
+`make setup` creates the virtual environment and installs dependencies. You then need to activate it in your terminal with `source venv/bin/activate`.
 
 Or manually:
 
@@ -127,7 +130,7 @@ Or manually:
 pytest test_pathfinder.py -v
 ```
 
-To remove generated files:
+To delete the virtual environment, caches, and output images:
 
 ```bash
 make clean
